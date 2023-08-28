@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 
@@ -49,3 +50,30 @@ class BaseItem:
 
     def _update(self):
         self._modification_time = datetime.now()
+
+
+class LoginItem(BaseItem):
+
+    def __init__(self, name, description):
+        super().__init__(name, description)
+        self._data = {
+            'login': ['', self.__check_login],
+            'email': ['', self.__check_email],
+            'password': ['', self.__check_password],
+            'notes': ['', self.__check_notes],
+        }
+
+    def __check_login(self, login: str):
+        return login.strip() != ''
+    
+    def __check_email(self, email: str):
+        return re.match(
+            r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b',
+            email
+        )
+
+    def __check_password(self, password: str):
+        return password.strip() != ''
+
+    def __check_notes(self, notes: str):
+        return True
