@@ -77,3 +77,27 @@ class LoginItem(BaseItem):
 
     def __check_notes(self, notes: str):
         return True
+
+
+class CardItem(BaseItem):
+
+    def __init__(self, name, description):
+        super().__init__(name, description)
+        self._data = {
+            'number': ['', self.__check_number],
+            'cvv': ['', self.__check_cvv],
+            'expiration': [datetime(), self.__check_expiration],
+            'notes': ['', self.__check_notes],
+        }
+
+    def __check_number(self, number: str):
+        return re.match(r'(\d{4})(-?)(\d{4})(\2\d{4}){2}', number)
+
+    def __check_cvv(self, cvv: str):
+        return re.match(r'\d{3,4}', cvv)
+
+    def __check_expiration(self, expiration: datetime):
+        return True
+
+    def __check_notes(self, notes: str):
+        return True        
