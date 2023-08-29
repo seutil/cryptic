@@ -42,7 +42,9 @@ class BaseGroup:
 
     def append(self, item: items.BaseItem):
         self._check_item(item)
-        if item.group is not None:
+        if item.group is self:
+            return
+        elif item.group is not None:
             raise ValueError('Item group is already installed')
 
         for i in self._items:
