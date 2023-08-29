@@ -71,11 +71,16 @@ class BaseGroup:
 
     def __setitem__(self, key: int, item: items.BaseItem):
         self._check_item(item)
-        if item.group is not None:
-            raise ValueError('Item group is already installed')
-        elif item in self._items:
+        if item.group is self:
             return
+        elif item.group is not None:
+            raise ValueError('Item group is already installed')
 
+        for i in self._items:
+            if i.name == item.name:
+                raise ValueError('Item with specified name already exists')
+
+        self._items[key]._group = None  # unset group for previous item
         item._group = self
         self._items[key] = item
         self._update()
