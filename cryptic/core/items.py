@@ -76,7 +76,7 @@ class LoginItem(BaseItem):
         elif new_email and not re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b', new_email):
             raise ValueError(f'Invalid email address: {new_email}')
         
-        self.email = new_email
+        self._email = new_email
         self._update()
 
 
@@ -84,7 +84,7 @@ class CardItem(BaseItem):
 
     def __init__(
             self, name: str, number: str, cvv: str,
-            expiration=datetime(), holder=''):
+            expiration=None, holder=''):
         super().__init__(name)
         self.number = number
         self.cvv = cvv
@@ -124,8 +124,8 @@ class CardItem(BaseItem):
         return self._expiration
 
     @expiration.setter
-    def expiration(self, new_expiration: datetime):
-        if not isinstance(new_expiration, datetime):
+    def expiration(self, new_expiration: datetime | None):
+        if not isinstance(new_expiration, datetime | None):
             raise TypeError('The card expiration date must be inherited from datetime')
         
         self._expiration = new_expiration
