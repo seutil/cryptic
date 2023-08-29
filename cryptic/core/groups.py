@@ -44,8 +44,10 @@ class BaseGroup:
         self._check_item(item)
         if item.group is not None:
             raise ValueError('Item group is already installed')
-        elif item in self._items:
-            return
+
+        for i in self._items:
+            if i.name == item.name:
+                raise ValueError('Item with specified name already exists')
 
         item._group = self
         self._items.append(item)
@@ -73,6 +75,7 @@ class BaseGroup:
         elif item in self._items:
             return
 
+        item._group = self
         self._items[key] = item
         self._update()
 
