@@ -20,3 +20,19 @@ def test_constructor_valid(name, number, cvv, expiration, holder):
     assert item.expiration == expiration
     assert item.holder == holder
     assert start <= item.modification_time <= datetime.now()
+
+
+def test_number():
+    try:
+        item = CardItem('Name', '1234 5678 9012 3456', '123')
+    except Exception as e:
+        pytest.fail(f'Exception raised: {e}')
+
+    with pytest.raises(TypeError):
+        item.number = 1234_5678_9012_3456
+
+    with pytest.raises(ValueError):
+        item.number = '2344'
+    
+    item.number = '1234 4324-4234 4321'
+    assert item.number == '1234 4324-4234 4321'
