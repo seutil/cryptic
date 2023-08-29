@@ -36,6 +36,10 @@ class BaseGroup:
         self._description = new_description
         self._update()
 
+    @property
+    def modification_time(self) -> datetime:
+        return self._modification_time
+
     def append(self, item: items.BaseItem):
         self._check_item(item)
         if item in self._items:
