@@ -1,6 +1,6 @@
 import abc
-import items
 from datetime import datetime
+from . import items
 
 
 class BaseGroup:
