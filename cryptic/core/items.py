@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 from datetime import datetime
 
 
@@ -8,6 +9,7 @@ class BaseItem:
     def __init__(self, name: str):
         self._name = name
         self._modification_time = datetime.now()
+        self._group = None
 
     @property
     def name(self) -> str:
@@ -24,6 +26,10 @@ class BaseItem:
     @property
     def modification_time(self) -> datetime:
         return self._modification_time
+
+    @property
+    def group(self) -> Optional['BaseGroup']:
+        return self._group
 
     def _update(self):
         self._modification_time = datetime.now()
