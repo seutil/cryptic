@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class BaseItem:
-    ''' Base abstract class for all items '''
+    ''' Base class for all items '''
 
     def __init__(self, name: str):
         self._name = name
