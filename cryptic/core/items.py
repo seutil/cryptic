@@ -31,7 +31,7 @@ class BaseItem:
 
 class LoginItem(BaseItem):
 
-    def __init__(self, name, login, password, email=''):
+    def __init__(self, name: str, login: str, password: str, email=''):
         super().__init__(name)
         self.login = login
         self.password = password
