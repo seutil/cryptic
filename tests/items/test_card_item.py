@@ -36,3 +36,20 @@ def test_number():
     
     item.number = '1234 4324-4234 4321'
     assert item.number == '1234 4324-4234 4321'
+
+
+def test_cvv():
+    try:
+        item = CardItem('Name #2', '3742-4545-5400-1235', '2221')
+    except Exception as e:
+        pytest.fail(f'Exception raised: {e}')
+
+    with pytest.raises(TypeError):
+        item.cvv = 213
+
+    with pytest.raises(ValueError):
+        item.cvv = '12'
+        item.cvv = '23534'
+    
+    item.cvv = '222'
+    assert item.cvv == '222'
