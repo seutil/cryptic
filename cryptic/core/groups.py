@@ -56,6 +56,7 @@ class BaseGroup:
     def remove(self, item: items.BaseItem):
         self._check_item(item)
         self._items.remove(item)
+        item._group = None
         self._update()
 
     def _update(self):
@@ -100,4 +101,3 @@ class CardsGroup(BaseGroup):
     def _check_item(self, item: items.BaseItem):
         if not isinstance(item, items.CardItem):
             raise TypeError(f'Invalid item type. Expected CardItem, get {item.__class__.name}')
-
