@@ -78,3 +78,67 @@ class LoginItem(BaseItem):
         
         self.email = new_email
         self._update()
+
+
+class CardItem(BaseItem):
+
+    def __init__(
+            self, name: str, number: str, cvv: str,
+            expiration=datetime(), holder=''):
+        super().__init__(name)
+        self.number = number
+        self.cvv = cvv
+        self.expiration = expiration
+        self.holder = holder
+
+    @property
+    def number(self) -> str:
+        return self._number
+    
+    @number.setter
+    def number(self, new_number: str):
+        if not isinstance(new_number, str):
+            raise TypeError('The number attribute must be inherited from str')
+        elif not re.match(r'(\d{4})(-?)(\d{4})(\2\d{4}){2}', new_number):
+            raise ValueError(f'Invalid card number: {new_number}')
+        
+        self._number = new_number
+        self._update()
+    
+    @property
+    def cvv(self) -> str:
+        return self._cvv
+    
+    @cvv.setter
+    def cvv(self, new_cvv: str):
+        if not isinstance(new_cvv, str):
+            raise TypeError('The cvv attribute must be inherited from str')
+        elif not re.match(r'\d{3,4}', new_cvv):
+            raise ValueError(f'Invalid card cvv: {new_cvv}')
+        
+        self._cvv = new_cvv
+        self._update()
+
+    @property
+    def expiration(self) -> datetime:
+        return self._expiration
+
+    @expiration.setter
+    def expiration(self, new_expiration: datetime):
+        if not isinstance(new_expiration, datetime):
+            raise TypeError('The card expiration date must be inherited from datetime')
+        
+        self._expiration = new_expiration
+        self._update()
+
+    @property
+    def holder(self) -> str:
+        return self._holder
+    
+    @holder.setter
+    def holder(self, new_holder: str):
+        if not isinstance(new_holder, str):
+            raise TypeError('The card holder must be inherited from str')
+
+        self._holder = new_holder
+        self._update()
