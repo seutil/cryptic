@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class BaseItem:
-    ''' Base class for all items '''
+    """ Base class for all items """
 
     def __init__(self, name: str):
         self._name = name
@@ -90,7 +90,7 @@ class CardItem(BaseItem):
 
     def __init__(
             self, name: str, number: str, cvv: str,
-            expiration: Optional[datetime]=None, holder=''):
+            expiration: Optional[datetime] = None, holder=''):
         super().__init__(name)
         self.number = number
         self.cvv = cvv
