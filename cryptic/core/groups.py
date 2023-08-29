@@ -81,10 +81,13 @@ class BaseGroup:
 class LoginsGroup(BaseGroup):
 
     def _check_item(self, item: items.BaseItem):
-        return isinstance(item, items.LoginItem)
+        if not isinstance(item, items.LoginItem):
+            raise TypeError(f'Invalid item type. Expected LoginItem, get {item.__class__.name}')
 
 
 class CardsGroup(BaseGroup):
 
     def _check_item(self, item: items.BaseItem):
-        return isinstance(item, items.CardItem)
+        if not isinstance(item, items.CardItem):
+            raise TypeError(f'Invalid item type. Expected CardItem, get {item.__class__.name}')
+
