@@ -19,3 +19,17 @@ def test_constructor_valid(name, login, password, email):
     assert item.password == password
     assert item.email == email
     assert start <= item.modification_time <= datetime.now()
+
+
+def test_login():
+    item = LoginItem('', 'login', 'password')
+    with pytest.raises(TypeError):
+        item.login = 123
+    
+    with pytest.raises(ValueError):
+        item.login = ''
+    
+    try:
+        item.login = 'login'
+    except Exception as e:
+        pytest.fail('Exception raised: {e}')
