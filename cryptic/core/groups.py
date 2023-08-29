@@ -6,7 +6,8 @@ from . import items
 class BaseGroup:
     """ Base class for all groups """
 
-    def __init__(self, name: str, description=''):
+    def __init__(self, item_type: type[items.BaseItem], name: str, description=''):
+        self._item_type = item_type
         self._name = name
         self._description = description
         self._modification_time = datetime.now()
@@ -41,22 +42,17 @@ class BaseGroup:
         return self._modification_time
 
     def append(self, item: items.BaseItem):
-        self._check_item(item)
-        if item.group is self:
+        if not self._check_item(item):
             return
-        elif item.group is not None:
-            raise ValueError('Item group is already installed')
-
-        for i in self._items:
-            if i.name == item.name:
-                raise ValueError('Item with specified name already exists')
 
         item._group = self
         self._items.append(item)
         self._update()
 
     def remove(self, item: items.BaseItem):
-        self._check_item(item)
+        if not isinstance(item, self._item_type):
+            raise TypeError(f'Unexpected item type. Expected {self._item_type.name}, got {item.__class__.name}')
+
         self._items.remove(item)
         item._group = None
         self._update()
@@ -64,23 +60,26 @@ class BaseGroup:
     def _update(self):
         self._modification_time = datetime.now()
 
-    @abc.abstractmethod
-    def _check_item(self, item: items.BaseItem):
-        raise NotImplementedError(f'Class "{self.__class__.name}" is not implemented')
+    def _check_item(self, item: items.BaseItem) -> bool:
+        if not isinstance(item, self._item_type):
+            raise TypeError(f'Unexpected item type. Expected {self._item_type.name}, got {item.__class__.name}')
+        elif item.group is not None:
+            raise ValueError('Item group is already installed')
+        elif item.group is self:
+            return False
+
+        for i in self._items:
+            if i.name == item.name:
+                raise ValueError('Item with specified name already exists')
+
+        return True
 
     def __getitem__(self, key: int) -> items.BaseItem:
         return self._items[key]
 
     def __setitem__(self, key: int, item: items.BaseItem):
-        self._check_item(item)
-        if item.group is self:
+        if not self._check_item(item):
             return
-        elif item.group is not None:
-            raise ValueError('Item group is already installed')
-
-        for i in self._items:
-            if i.name == item.name:
-                raise ValueError('Item with specified name already exists')
 
         self._items[key]._group = None  # unset group for previous item
         item._group = self
@@ -98,13 +97,11 @@ class BaseGroup:
 
 class LoginsGroup(BaseGroup):
 
-    def _check_item(self, item: items.BaseItem):
-        if not isinstance(item, items.LoginItem):
-            raise TypeError(f'Invalid item type. Expected LoginItem, get {item.__class__.name}')
+    def __init__(self, name: str, description=''):
+        super().__init__(items.LoginItem, name, description)
 
 
 class CardsGroup(BaseGroup):
 
-    def _check_item(self, item: items.BaseItem):
-        if not isinstance(item, items.CardItem):
-            raise TypeError(f'Invalid item type. Expected CardItem, get {item.__class__.name}')
+    def __init__(self, name: str, description=''):
+        super().__init__(items.CardItem, name, description)
