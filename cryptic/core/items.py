@@ -33,6 +33,7 @@ class BaseItem:
 
     def _update(self):
         self._modification_time = datetime.now()
+        self._group and self._group._update()
 
     def __eq__(self, other):
         if not isinstance(other, BaseItem):
