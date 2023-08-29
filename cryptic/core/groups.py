@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class BaseGroup:
-    ''' Base class for all groups '''
+    """ Base class for all groups """
 
     def __init__(self, name: str, description=''):
         self._name = name
