@@ -99,7 +99,7 @@ class CardItem(BaseItem):
     def number(self, new_number: str):
         if not isinstance(new_number, str):
             raise TypeError('The number attribute must be inherited from str')
-        elif not re.match(r'(\d{4})(-?)(\d{4})(\2\d{4}){2}', new_number):
+        elif not re.match(r'\d{4}[ -]\d{4}[ -]\d{4}[ -]\d{4}', new_number):
             raise ValueError(f'Invalid card number: {new_number}')
         
         self._number = new_number
