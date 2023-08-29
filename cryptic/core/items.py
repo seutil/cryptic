@@ -10,11 +10,11 @@ class BaseItem:
         self._modification_time = datetime.now()
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @name.setter
-    def name(self, new_name):
+    def name(self, new_name: str):
         if self._name == new_name:
             return
 
@@ -22,7 +22,7 @@ class BaseItem:
         self._update()
 
     @property
-    def modification_time(self):
+    def modification_time(self) -> datetime:
         return self._modification_time
 
     def _update(self):
