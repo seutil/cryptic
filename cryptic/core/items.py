@@ -34,6 +34,12 @@ class BaseItem:
     def _update(self):
         self._modification_time = datetime.now()
 
+    def __eq__(self, other):
+        if not isinstance(other, BaseItem):
+            raise TypeError(f'Cannot compare {self.__class__.name} in __eq__')
+
+        return self._name == other._name and self._group == other._group
+
 
 class LoginItem(BaseItem):
 
