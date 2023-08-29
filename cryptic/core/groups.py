@@ -10,7 +10,7 @@ class BaseGroup:
         self._name = name
         self._description = description
         self._modification_time = datetime.now()
-        self._items = []
+        self._items: list[items.BaseItem] = []
 
     @property
     def name(self) -> str:
@@ -57,7 +57,7 @@ class BaseGroup:
         self._update()
 
     def __delitem__(self, key: int):
-        # TODO: set item group to None
+        self._items[key]._group = None
         del self._items[key]
         self._update()
 
