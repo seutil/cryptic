@@ -84,7 +84,7 @@ class CardItem(BaseItem):
 
     def __init__(
             self, name: str, number: str, cvv: str,
-            expiration=None, holder=''):
+            expiration: datetime=None, holder=''):
         super().__init__(name)
         self.number = number
         self.cvv = cvv
