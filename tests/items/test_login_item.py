@@ -33,3 +33,23 @@ def test_login():
         item.login = 'login'
     except Exception as e:
         pytest.fail('Exception raised: {e}')
+
+
+def test_password():
+    try:
+        item = LoginItem('name', 'login', 'password')
+    except Exception as e:
+        pytest.fail(f'Exception raised: {e}')
+    
+    with pytest.raises(TypeError):
+        item.password = 1233
+
+    with pytest.raises(ValueError):
+        item.password = ''
+    
+    try:
+        item.password = 'new-password'
+    except Exception as e:
+        pytest.fail(f'Exception raised: {e}')
+
+    assert item.password == 'new-password'
