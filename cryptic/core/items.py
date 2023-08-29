@@ -90,7 +90,7 @@ class CardItem(BaseItem):
 
     def __init__(
             self, name: str, number: str, cvv: str,
-            expiration: datetime=None, holder=''):
+            expiration: Optional[datetime]=None, holder=''):
         super().__init__(name)
         self.number = number
         self.cvv = cvv
@@ -126,7 +126,7 @@ class CardItem(BaseItem):
         self._update()
 
     @property
-    def expiration(self) -> datetime:
+    def expiration(self) -> Optional[datetime]:
         return self._expiration
 
     @expiration.setter
