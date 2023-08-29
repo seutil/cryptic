@@ -27,14 +27,14 @@ class BaseGroup:
     @property
     def description(self) -> str:
         return self._description
-    
+
     @description.setter
     def description(self, new_description: str):
-         if self._description == new_description:
-             return
-         
-         self._description = new_description
-         self._update()
+        if self._description == new_description:
+            return
+
+        self._description = new_description
+        self._update()
 
     def _update(self):
         self._modification_time = datetime.now()
@@ -46,11 +46,14 @@ class BaseGroup:
     def __getitem__(self, key: int) -> items.BaseItem:
         return self._items[key]
 
-    def __setitem__(self, key: int, value: items.BaseItem):
-        self._check_item(value)
-        # TODO: check that item's group
-        # TODO: chat that item is not in the list
-        self._items[key] = value
+    def __setitem__(self, key: int, item: items.BaseItem):
+        self._check_item(item)
+        if item.group is not None:
+            raise ValueError('Item group is already installed')
+        elif item in self._items:
+            return
+
+        self._items[key] = item
         self._update()
 
     def __delitem__(self, key: int):
