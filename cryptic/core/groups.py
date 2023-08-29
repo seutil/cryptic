@@ -63,3 +63,15 @@ class BaseGroup:
 
     def __len__(self) -> int:
         return len(self._items)
+
+
+class LoginsGroup(BaseGroup):
+
+    def _check_item(self, item: items.BaseItem):
+        return isinstance(item, items.LoginItem)
+
+
+class CardsGroup(BaseGroup):
+
+    def _check_item(self, item: items.BaseItem):
+        return isinstance(item, items.CardItem)
