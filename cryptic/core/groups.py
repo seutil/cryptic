@@ -36,6 +36,19 @@ class BaseGroup:
         self._description = new_description
         self._update()
 
+    def append(self, item: items.BaseItem):
+        self._check_item(item)
+        if item in self._items:
+            return
+
+        self._items.append(item)
+        self._update()
+
+    def remove(self, item: items.BaseItem):
+        self._check_item(item)
+        self._items.remove(item)
+        self._update()
+
     def _update(self):
         self._modification_time = datetime.now()
 
