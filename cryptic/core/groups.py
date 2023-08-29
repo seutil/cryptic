@@ -3,7 +3,7 @@ import items
 from datetime import datetime
 
 
-class BaseGroup():
+class BaseGroup:
     ''' Base class for all groups '''
 
     def __init__(self, name: str, description=''):
