@@ -53,3 +53,23 @@ def test_password():
         pytest.fail(f'Exception raised: {e}')
 
     assert item.password == 'new-password'
+
+
+def test_email():
+    try:
+        item = LoginItem('name', 'login', 'password', 'example@mail.com')
+    except Exception as e:
+        pytest.fail(f'Exception raised: {e}')
+
+    with pytest.raises(TypeError):
+        item.email = 32
+    
+    with pytest.raises(ValueError):
+        item.email = 'invalid-email'
+    
+    try:
+        item.email = 'benjaminmiller@email.com'
+    except Exception as e:
+        pytest.fail(f'Exception raised: {e}')
+
+    assert item.email == 'benjaminmiller@email.com'
