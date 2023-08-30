@@ -47,3 +47,11 @@ class SHA512(BaseHasher):
 
     def hash(self, data: str) -> str:
         return s512.new(data.encode('utf-8')).hexdigest()
+
+
+def from_id(_id: HasherId) -> type[BaseHasher]:
+    return {
+        HasherId.MD5: MD5,
+        HasherId.SHA256: SHA256,
+        HasherId.SHA512: SHA512
+    }[_id]
