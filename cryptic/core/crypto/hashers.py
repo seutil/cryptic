@@ -1,11 +1,12 @@
 import enum
-from Crypto.Hash import MD5 as md5, SHA256 as s256
+from Crypto.Hash import MD5 as md5, SHA256 as s256, SHA512 as s512
 
 
 @enum.unique
 class HasherId(enum.Enum):
     MD5 = "MD5"
     SHA256 = "SHA256"
+    SHA512 = "SHA512"
 
 
 class BaseHasher:
@@ -37,3 +38,12 @@ class SHA256(BaseHasher):
 
     def hash(self, data: str) -> str:
         return s256.new(data.encode('utf-8')).hexdigest()
+
+
+class SHA512(BaseHasher):
+
+    def __init__(self):
+        super().__init__(HasherId.SHA512)
+
+    def hash(self, data: str) -> str:
+        return s512.new(data.encode('utf-8')).hexdigest()
