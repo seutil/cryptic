@@ -1,4 +1,4 @@
-from cryptic.core.crypto.hashers import MD5, HasherId
+from cryptic.core.crypto.hashers import MD5, ID
 
 
 def test_hash():
@@ -10,4 +10,4 @@ def test_hash():
 
 
 def test_id():
-    assert MD5().id == HasherId.MD5
+    assert MD5().id == ID.MD5

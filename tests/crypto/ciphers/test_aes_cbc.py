@@ -11,4 +11,4 @@ def test_cipher_cycle(data, key, salt):
 
 
 def test_id():
-    assert ciphers.AES_CBC('12', '12').id == ciphers.CipherId.AES_CBC
+    assert ciphers.AES_CBC('12', '12').id == ciphers.ID.AES_CBC

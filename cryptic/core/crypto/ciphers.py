@@ -8,19 +8,19 @@ from Crypto.Random import get_random_bytes
 
 
 @enum.unique
-class CipherId(enum.Enum):
+class ID(enum.Enum):
     AES_CBC = "AES-CBC"
 
 
 class BaseCipher:
 
-    def __init__(self, _id: CipherId, key: str, salt: str):
+    def __init__(self, _id: ID, key: str, salt: str):
         self._id = _id
         self.key = key
         self.salt = salt
 
     @property
-    def id(self) -> CipherId:
+    def id(self) -> ID:
         return self._id
 
     @property
@@ -54,7 +54,7 @@ class BaseCipher:
 
 class BaseAES(BaseCipher):
 
-    def __init__(self, mode, _id: CipherId, key: str, salt: str):
+    def __init__(self, mode, _id: ID, key: str, salt: str):
         super().__init__(_id, key, salt)
         self._mode = mode
 
@@ -77,4 +77,4 @@ class BaseAES(BaseCipher):
 class AES_CBC(BaseAES):
 
     def __init__(self, key: str, salt: str):
-        super().__init__(AES.MODE_CBC, CipherId.AES_CBC, key, salt)
+        super().__init__(AES.MODE_CBC, ID.AES_CBC, key, salt)

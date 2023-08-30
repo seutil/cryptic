@@ -1,4 +1,4 @@
-from cryptic.core.crypto.hashers import SHA512, HasherId
+from cryptic.core.crypto.hashers import SHA512, ID
 
 
 def test_hash():
@@ -10,4 +10,4 @@ def test_hash():
 
 
 def test_id():
-    assert SHA512().id == HasherId.SHA512
+    assert SHA512().id == ID.SHA512
