@@ -1,4 +1,5 @@
 import abc
+from typing import Optional
 from datetime import datetime
 from . import items
 
@@ -12,6 +13,7 @@ class BaseGroup:
         self._description = description
         self._modification_time = datetime.now()
         self._items: list[items.BaseItem] = []
+        self._storage = None
 
     @property
     def name(self) -> str:
@@ -40,6 +42,10 @@ class BaseGroup:
     @property
     def modification_time(self) -> datetime:
         return self._modification_time
+
+    @property
+    def storage(self) -> Optional['Storage']:
+        return self._storage
 
     def append(self, item: items.BaseItem):
         if not self._check_item(item):
@@ -93,6 +99,12 @@ class BaseGroup:
 
     def __len__(self) -> int:
         return len(self._items)
+
+    def __eq__(self, other):
+        if not isinstance(other, BaseGroup):
+            raise TypeError(f'Cannot compare {self.__class__.name} with {other}')
+
+        return self._storage is other._storage and self._name == other._name
 
 
 class LoginsGroup(BaseGroup):
